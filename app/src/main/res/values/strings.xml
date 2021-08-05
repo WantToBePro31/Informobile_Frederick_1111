@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">MovieZ</string>
+    
+    <string-array name="Choice">
+        <item>Now Showing</item>
+        <item>Coming Soon</item>
+        <item>Most Popular</item>
+    </string-array>
+</resources>
