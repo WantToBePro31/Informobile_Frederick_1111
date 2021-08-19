@@ -3,19 +3,24 @@ package com.fred.moviez
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.imageview.ShapeableImageView
 
-class MyAdapter(private val List: ArrayList<New>) : RecyclerView.Adapter<MyAdapter.ViewHolder>() {
+class MyAdapter(private val List: ArrayList<Film>, val listener: (Film) -> Unit) : RecyclerView.Adapter<MyAdapter.ViewHolder>() {
 
-    class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
+    inner class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
         val titleImage : ShapeableImageView = itemView.findViewById(R.id.title_image)
         val textTitle: TextView = itemView.findViewById(R.id.textTitle)
-        val rating : TextView = itemView.findViewById(R.id.film_rate)
+        val age : TextView = itemView.findViewById(R.id.age_rate)
         val genre : TextView = itemView.findViewById(R.id.film_genre)
+        fun bindView(film: Film, listener: (Film) -> Unit){
+            titleImage.setImageResource(film.titleImage)
+            textTitle.text = film.textTitle
+            age.text = film.ageRating
+            genre.text = film.genreFilm
+            itemView.setOnClickListener { listener(film) }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -24,11 +29,7 @@ class MyAdapter(private val List: ArrayList<New>) : RecyclerView.Adapter<MyAdapt
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val currentItem = List[position]
-        holder.titleImage.setImageResource(currentItem.titleImage)
-        holder.textTitle.text = currentItem.textTitle
-        holder.rating.text = currentItem.ratingFilm
-        holder.genre.text = currentItem.genreFilm
+        holder.bindView(List[position], listener)
     }
 
     override fun getItemCount(): Int {
